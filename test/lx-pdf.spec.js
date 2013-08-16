@@ -32,10 +32,9 @@ describe('lx-pdf', function () {
         expect(sut.addContent('address', 'There is no Address Section for Page 2')).toBeFalsy();
         expect(sut.addContent('content', 'Content for Page 2')).toBeTruthy();
 
-        sut.save(':/Dummy.pdf', function(result) {
-            expect(result).toBeDefined();
+        sut.save('Dummy.pdf', function(result) {
+            expect(result).toBeNull();
         });
-
     });
 
 });
