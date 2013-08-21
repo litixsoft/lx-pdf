@@ -1,0 +1,160 @@
+{
+  "name"    : "Dummy Template for Test",
+  "version" : "1.0.0",
+  "debug"   : true,
+  "options" : {
+    "pages": [
+    {
+      "layout"    : {
+        "size"   : "A4",
+        "layout" : "portrait",
+        "margins": {
+          "top"   : 0,
+          "left"  : 0,
+          "bottom": 0,
+          "right" : 0
+        }
+      },
+      "background": {
+        "imageformat": {
+          "fit": [595.28, 841.89]
+        }
+      },
+      "sections": {
+        "address": {
+          "font"  : {
+            "name" : "./test/fonts/arial.ttf",
+            "size" : 10,
+            "color": "#000000"
+          },
+          "format": {
+            "align" : "left",
+            "left"  : 70,
+            "top"   : 160,
+            "width" : 290,
+            "height": 110
+          }
+        },
+        "linebreak": {
+          "font"  : {
+              "name" : "./test/fonts/arial.ttf",
+              "size" : 12,
+              "color": "#000000"
+          },
+          "format": {
+              "align" : "left",
+              "left"  : 360,
+              "top"   : 160,
+              "width" : 191,
+              "height": 110
+          }
+        },
+        "toosmall"   : {
+          "font"  : {
+              "name" : "./test/fonts/arial.ttf",
+              "size" : 10,
+              "color": "#000000"
+          },
+          "format": {
+              "align" : "right",
+              "left"  : 70,
+              "top"   : 270,
+              "width" : 200,
+              "height": 20
+          }
+        },
+        "date"   : {
+          "font"  : {
+            "name" : "./test/fonts/arial.ttf",
+            "size" : 10,
+            "color": "#000000"
+          },
+          "format": {
+            "align" : "right",
+            "left"  : 280,
+            "top"   : 270,
+            "width" : 271,
+            "height": 23
+          }
+        },
+        "subject": {
+          "font"  : {
+            "name" : "./test/fonts/arialbd.ttf",
+            "size" : 11,
+            "color": "#000000"
+          },
+          "format": {
+            "align" : "left",
+            "left"  : 70,
+            "top"   : 295,
+            "width" : 481,
+            "height": 55
+          }
+        },
+        "content": {
+          "font"  : {
+            "name" : "./test/fonts/arial.ttf",
+            "size" : 12,
+            "color": "#000000"
+          },
+          "format": {
+            "align" : "left",
+            "left"  : 70,
+            "top"   : 350,
+            "width" : 481,
+            "height": 200
+          }
+        },
+        "table": {
+            "table":[
+                {"caption": "Col A", "format": {"left":  70, "width": 70, "align": "center"}},
+                {"caption": "Col B", "format": {"left": 140, "width": 70, "align": "center"}},
+                {"caption": "",      "format": {"left": 210, "width": 70, "align": "center"}},
+                {"caption": "Col D", "format": {"left": 280, "width": 70, "align": "center"}}
+            ],
+            "format": {
+                "align" : "left",
+                "left"  : 70,
+                "top"   : 560,
+                "width" : 481,
+                "height": 200
+            }
+        }
+      }
+    },
+    {
+      "layout"    : {
+        "size"   : "A4",
+        "layout" : "portrait",
+        "margins": {
+          "top"   : 0,
+          "left"  : 0,
+          "bottom": 0,
+          "right" : 0
+        }
+      },
+      "background": {
+        "imageformat": {
+          "fit": [595.28, 841.89]
+        }
+      },
+      "sections": {
+          "content": {
+              "font"  : {
+                  "name" : "./test/fonts/arial.ttf",
+                  "size" : 12,
+                  "color": "#000000"
+              },
+              "format": {
+                  "align" : "justify",
+                  "left"  : 70,
+                  "top"   : 140,
+                  "width" : 481,
+                  "height": 630
+              }
+          }
+      }
+    }
+  ]
+  }
+}
