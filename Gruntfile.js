@@ -4,7 +4,7 @@ module.exports = function (grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        jshintFiles: ['Gruntfile.js', 'lib/**/.js', 'test/**/*.js'],
+        jshintFiles: ['Gruntfile.js', 'lib/**/*.js', 'test/**/*.js'],
         clean: {
             jasmine: ['build/jasmine'],
             lint: ['build/lint'],
