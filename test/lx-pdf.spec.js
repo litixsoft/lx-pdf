@@ -28,6 +28,7 @@ describe('lx-pdf', function () {
     it('add some content', function() {
         expect(sut.addContent('list', ['Entry A', 'Entry B', '', 'Entry D'])).toBeTruthy();
         expect(sut.addContent('linebreak', 'This text is too width. And should be automatic break.')).toBeTruthy();
+        expect(sut.addContent('noneexits', 'This text will never display.')).toBeTruthy();
 
         expect(sut.addContent('date', '31.12.1234')).toBeTruthy();
         expect(sut.addContent('subject', 'Small Test')).toBeTruthy();
@@ -37,6 +38,8 @@ describe('lx-pdf', function () {
         expect(sut.addContent('area51', bigTextNumberTwo)).toBeTruthy();
         expect(sut.addContent('area51', bigTextNumberThree)).toBeTruthy();
 
+        sut.addTable('area51', [['A1', 'B1', 'C1'], ['A2', 'B2', 'C2'], ['A3', 'B3', 'C3']], [], 2);
+
         sut.render('Dummy.pdf', function(result) {
             console.log('New Result is ' + (result === null) );
             expect(result).toBeNull();
@@ -45,47 +48,4 @@ describe('lx-pdf', function () {
         waits(1000);
     });
 
-//    it('add some content', function() {
-//        expect(sut.getPageIndex()).toBe(1);
-//        expect(sut.addContent('list', ['Entry A', 'Entry B', '', 'Entry D'])).toBeTruthy();
-//        expect(sut.addContent('linebreak', 'This text is too width. And should be automatic break.')).toBeTruthy();
-//
-////        expect(function() {
-////            sut.addContent('toosmall', 'Height is too small!');
-////        }).toThrow();
-//
-//        expect(sut.addContent('date', '31.12.1234')).toBeTruthy();
-//        expect(sut.addContent('subject', 'Small Test')).toBeTruthy();
-//
-//
-//        // add Table Data
-//        expect(sut.addTable('tablecontent', [0, 1, 2, 3])).toBeFalsy();
-//        expect(function() {
-//            sut.addTable('content', [0, 1, 2, 3]);
-//        }).toThrow();
-//        expect(sut.addTable('table', [0, 1, 2, 3])).toBeTruthy();
-//
-//        sut.addPage();
-//        expect(sut.getPageIndex()).toBe(2);
-//        expect(sut.addContent('address', 'There is no Address Section for Page 2')).toBeFalsy();
-//        expect(sut.addContent('content', 'Content for Page 2')).toBeTruthy();
-//
-//        // Add Image
-//        expect(function() {
-//            sut.addImage('./test/images/litixlogo.png', 70, 120, 'Litixsoft Logo', {});
-//        }).not.toThrow();
-//
-//
-//        expect(sut.addContent('area51', bigText, true)).toBeTruthy();
-//
-//        sut.save('Dummy.pdf', function(result) {
-//            expect(result).toBeNull();
-//        });
-//
-//        sut.render('DummyNEW.pdf', function(result) {
-//            console.log('New Result is ' + (result === null) );
-//        });
-//
-//        waits(1000);
-//    });
 });
