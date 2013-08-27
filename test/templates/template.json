@@ -149,6 +149,7 @@
         }
       },
       "background": {
+        "filename"   : "./test/images/background.png",
         "imageformat": {
           "fit": [595.28, 841.89]
         }
