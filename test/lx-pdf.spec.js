@@ -24,7 +24,7 @@ describe('lx-pdf', function () {
         expect(sut.loadTemplate('test/templates/template.json')).toBeTruthy();
     });
 
-    it('add some content', function() {
+    it('add some content and save to file', function() {
         expect(sut.addContent('list', ['Entry A', 'Entry B', '', 'Entry D'])).toBeTruthy();
         expect(sut.addContent('linebreak', 'This text is too width. And should be automatic break.')).toBeTruthy();
         expect(sut.addContent('noneexits', 'This text will never display.')).toBeTruthy();
@@ -72,11 +72,48 @@ describe('lx-pdf', function () {
             expect(result).toBeNull();
         });
 
+        waits(1000);
+    });
+
+    it('simple pdf', function() {
+//        var template = {
+//            name   : 'Dummy Template for Test',
+//            options: {
+//                pages: [
+//                    {
+//                        layout    : {
+//                            size   : "A4",
+//                            layout : "portrait",
+//                            margins: {
+//                                top   : 0,
+//                                left  : 0,
+//                                bottom: 0,
+//                                right : 0
+//                            }
+//                        },
+//                        sections: {
+//                            "content": {
+//                                "font"  : {
+//                                    "name" : "./test/fonts/arial.ttf",
+//                                    "size" : 12,
+//                                    "color": "#000000"
+//                                },
+//                                "format": {
+//                                    "align" : "left",
+//                                    "left"  : 70,
+//                                    "top"   : 350,
+//                                    "width" : 481,
+//                                    "height": 320
+//                                }
+//                            }
+//                        }
+//                    },
+//
+//        }
+
         sut.print(function(result) {
             expect(result).toBeDefined();
         });
-
-        waits(1000);
     });
 
 });
