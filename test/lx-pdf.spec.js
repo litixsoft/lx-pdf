@@ -13,11 +13,9 @@ describe('lx-pdf', function () {
         expect(sut).toBeDefined();
         expect(typeof sut.loadTemplate).toBe('function');
         expect(typeof sut.addContent).toBe('function');
-//        expect(typeof sut.addTable).toBe('function');
-//        expect(typeof sut.addPage).toBe('function');
-//        expect(typeof sut.getPageIndex).toBe('function');
-//        expect(typeof sut.save).toBe('function');
-//        expect(typeof sut.print).toBe('function');
+        expect(typeof sut.addTable).toBe('function');
+        expect(typeof sut.save).toBe('function');
+        expect(typeof sut.print).toBe('function');
         expect(typeof sut.addImage).toBe('function');
     });
 
@@ -39,6 +37,8 @@ describe('lx-pdf', function () {
         expect(sut.addContent('area51', bigTextNumberTwo)).toBeTruthy();
         expect(sut.addContent('area51', bigTextNumberThree)).toBeTruthy();
 
+
+        // Table
         var tableHeader = [
             {text: 'Column 1', width: 160, align: 'left', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}},
             {text: 'Column 2', width: 161, align: 'left', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}},
@@ -57,15 +57,23 @@ describe('lx-pdf', function () {
             ['Cell A6', {text: 'Cell B6', align: 'right', font: {color: '#FF00FF'}}, 'Cell C6'],
             ['Cell A7', 'Cell B7', 'Cell C7'],
             ['Cell A8', 'Cell B8', 'Cell C8'],
+            // A Cell with different font
             ['', '', {text: 'Cell C9', align: 'right', font: {name : './test/fonts/arialbd.ttf'}}]
         ];
 
         sut.addTable('area51', tableData, tableHeader);
         sut.addContent('area51', bigTextNumberFour);
 
-        sut.render('Dummy.pdf', function(result) {
-            console.log('New Result is ' + (result === null) );
+        sut.addImage('area51', './test/images/litixlogo.png', {});
+
+        sut.addContent('area51', 'A Image above');
+
+        sut.save('Dummy.pdf', function(result) {
             expect(result).toBeNull();
+        });
+
+        sut.print(function(result) {
+            expect(result).toBeDefined();
         });
 
         waits(1000);
