@@ -14,9 +14,12 @@ describe('lx-pdf', function () {
         expect(typeof sut.loadTemplate).toBe('function');
         expect(typeof sut.addContent).toBe('function');
         expect(typeof sut.addTable).toBe('function');
+        expect(typeof sut.addImage).toBe('function');
+        expect(typeof sut.addPageBreak).toBe('function');
         expect(typeof sut.save).toBe('function');
         expect(typeof sut.print).toBe('function');
-        expect(typeof sut.addImage).toBe('function');
+        expect(typeof sut.clear).toBe('function');
+        expect(typeof sut.resetDocumentIndices).toBe('function');
     });
 
     it('should be loads a wrong template', function() {
@@ -36,7 +39,6 @@ describe('lx-pdf', function () {
         expect(sut.addContent('area51', bigTextNumberOne)).toBeTruthy();
         expect(sut.addContent('area51', bigTextNumberTwo)).toBeTruthy();
         expect(sut.addContent('area51', bigTextNumberThree)).toBeTruthy();
-
 
         // Table
         var tableHeader = [
@@ -92,6 +94,20 @@ describe('lx-pdf', function () {
                             }
                         },
                         sections: {
+                            header: {
+                                font  : {
+                                    name : './test/fonts/arial.ttf',
+                                    size : 12,
+                                    color: '#000000'
+                                },
+                                format: {
+                                    align : 'left',
+                                    left  : 70,
+                                    top   : 50,
+                                    width : 481,
+                                    height: 300
+                                }
+                            },
                             content: {
                                 font  : {
                                     name : './test/fonts/arial.ttf',
@@ -107,13 +123,55 @@ describe('lx-pdf', function () {
                                 }
                             }
                         }
+                    },
+                    {
+                        layout    : {
+                            size   : 'A4',
+                            layout : 'portrait',
+                            margins: {
+                                top   : 0,
+                                left  : 0,
+                                bottom: 0,
+                                right : 0
+                            }
+                        },
+                        sections: {
+                            content: {
+                                font  : {
+                                    name : './test/fonts/arial.ttf',
+                                    size : 12,
+                                    color: '#000000'
+                                },
+                                format: {
+                                    align : 'left',
+                                    left  : 70,
+                                    top   : 50,
+                                    width : 481,
+                                    height: 620
+                                }
+                            }
+                        }
                     }
                 ]
             }
         };
 
         sut.loadTemplate(simpleTemplate);
-        sut.addContent('content', 'Hello World!');
+
+        sut.clear();
+
+        expect(sut.addContent('header', 'Hello World!')).toBeTruthy();
+        expect(sut.addContent('content', 'Hello World!')).toBeTruthy();
+
+        sut.addPageBreak();
+
+        expect(sut.addContent('header', 'Hello World!')).toBeTruthy();
+        expect(sut.addContent('content', 'Hello World!')).toBeTruthy();
+
+        sut.resetDocumentIndices();
+
+        expect(sut.addContent('header', 'Hello World!')).toBeTruthy();
+        expect(sut.addContent('content', 'Hello World!')).toBeTruthy();
 
         sut.print(function(result) {
             expect(result).toBeDefined();
