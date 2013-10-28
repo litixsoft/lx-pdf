@@ -32,7 +32,7 @@ describe('lx-pdf', function () {
         expect(sut.addContent('linebreak', 'This text is too width. And should be automatic break.')).toBeTruthy();
         expect(sut.addContent('noneexits', 'This text will never display.')).toBeTruthy();
 
-        expect(sut.addContent('date', '31.12.1234')).toBeTruthy();
+        expect(sut.addContent('date', '31.12.2013')).toBeTruthy();
         expect(sut.addContent('subject', 'Small Test')).toBeTruthy();
         expect(sut.addContent('content', 'Content for Page')).toBeTruthy();
 
@@ -58,9 +58,10 @@ describe('lx-pdf', function () {
             // A Row with Styling in CELL B6
             ['Cell A6', {text: 'Cell B6', align: 'right', font: {color: '#FF00FF'}}, 'Cell C6'],
             ['Cell A7', 'Cell B7', 'Cell C7'],
-            ['Cell A8', 'Cell B8', 'Cell C8'],
+            // Draw a row with cell lines. Option "linemode" says, use border for every next cell in this line
+            [{text: 'Cell A8', border: {color: '#000000', style: 'normal', position: ['bottom', 'top'], linemode: true}}, 'Cell B8', 'Cell C8'],
             // A Cell with different font
-            ['', '', {text: 'Cell C9', align: 'right', font: {name : './test/fonts/arialbd.ttf'}}]
+            ['', '', {text: 'Cell C9', align: 'right', font: {name : './test/fonts/arialbd.ttf'}, border: {color: '#000000', style: 'double', position: ['bottom']}}]
         ];
 
         sut.addTable('area51', tableData, tableHeader);
