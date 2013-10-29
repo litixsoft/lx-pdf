@@ -31,8 +31,8 @@ Beispiel Template für ein Dokument im JSON Format. Das Layout sowie die Sektion
             ... // Seitenhintergrund
           },
           "sections": {
-            "list": {
-              ... // Sektion "LIST" für die Seite
+            "content": {
+              ... // Sektion "CONTENT" für die Seite
             }
             ...
           }
@@ -62,7 +62,7 @@ Das Layout beschreibt die Größe sowie die Ausrichtung der Seite.
 Als Hintgrund kann ein Bild verwendet werden. Ideal für Briefvorlagen.
 
     "background": {
-        "filename"   : "background.png",
+        "filename"   : "./image/background.png",
         "imageformat": {
 	        "fit": [595.28, 841.89]
     	}
@@ -74,7 +74,7 @@ Die Sektion beschreibt ein Element auf der Seite, mit Größe, Ausrichtung, Schr
 
     "content": { // Sektionsname
       "font"  : {
-          "name" : "arial.ttf", // Dateiname
+          "name" : "./fonts/arial.ttf", // Dateiname
           "size" : 12,
           "color": "#000000"
       },
@@ -85,4 +85,108 @@ Die Sektion beschreibt ein Element auf der Seite, mit Größe, Ausrichtung, Schr
           "width" : 481,
           "height": 70
       }
+    }
+
+## Arbeiten mit Sektionen
+
+#### Tabellen
+
+Darstellung einer Tabelle mit drei Spalten, sowie Kopfbezeichnung.
+
+		// The table header
+        var tableHeader = [
+            {
+                text: 'Column 1',
+                width: 160,
+                align: 'left',
+                font: {
+                    name : './fonts/arialbd.ttf',
+                    size : 12,
+                    color: '#000000'
+                }
+            },
+            {
+            	text: 'Column 2',
+                width: 161,
+                align: 'left',
+                font: {
+                	name : './fonts/arialbd.ttf',
+                    size : 12,
+                    color: '#000000'
+                }
+            },
+            {
+            	text: 'Column 3',
+                width: 160,
+                align: 'right',
+                font: {
+                	name : './fonts/arialbd.ttf',
+                    size : 12,
+                    color: '#000000'
+                }
+            }
+        ];
+
+        // The table content
+        var tableData = [
+            // Simple Row
+            ['Cell A1', 'Cell B1', 'Cell C1'],
+            // Simple Row with empty text
+            ['Cell A2', '', 'Cell C2'],
+            // A Row with Styling in CELL B6
+            ['Cell A6', {text: 'Cell B6', align: 'right', font: {color: '#FF00FF'}}, 'Cell C6'],
+            // Draw a row with border lines. Option "linemode" says, use border for every next cell in this line
+            [
+            	{
+                	text: 'Cell A8',
+                    border: {
+                    	color: '#000000',
+                        style: 'normal',
+                        position: ['bottom', 'top'],
+                        linemode: true
+                    }
+                },
+                'Cell B8',
+                'Cell C8'
+            ],
+            // A Cell with different font and double line
+            [
+            	'',
+                '',
+                {
+                	text: 'Cell C9',
+                    align: 'right',
+                    font: {
+                    	name : './fonts/arialbd.ttf'},
+                        border: {
+                        	color: '#000000',
+                            style: 'double',
+                            position: ['bottom']
+                        }
+                    }
+                }
+        ];
+
+		// Add table to document
+		lxDocument.addTable('content', tableData, tableHeader);
+
+#### Zellenformatierung
+
+Pro Zelle sind verschiedene Formatierungen möglich. Diese können dann auch Zeilenweit gesetzt werden.
+
+	var cellFormat = {
+    	text: 'My Text', // Text to display
+        align: 'right', // Textalignment (default: left)
+        font: {
+        	name: './fonts/arialbd.ttf', // Fontname
+            size: 12, // Fontsize
+            color: '#000000', // Fontcolor (default: #000000)
+        },
+        border: {
+        	color: '#000000', // Bordercolor (default: #000000)
+            style: 'normal', // Borderstyle normal|double (default: normal)
+            linemode: true, // Use format for next cells (default: false)
+            linewidth: 1, // The linewidth, only for style 'normal'
+            position: ['left', 'top', 'right', 'bottom'] // Border left|top|right|bottom
+        }
     }

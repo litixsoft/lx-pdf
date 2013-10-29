@@ -59,7 +59,7 @@ describe('lx-pdf', function () {
             ['Cell A6', {text: 'Cell B6', align: 'right', font: {color: '#FF00FF'}}, 'Cell C6'],
             ['Cell A7', 'Cell B7', 'Cell C7'],
             // Draw a row with cell lines. Option "linemode" says, use border for every next cell in this line
-            [{text: 'Cell A8', border: {color: '#000000', style: 'normal', position: ['bottom', 'top'], linemode: true}}, 'Cell B8', 'Cell C8'],
+            [{text: 'Cell A8', border: {color: '#000000', style: 'normal', position: ['bottom', 'top'], linemode: true, linewidth: 2}}, 'Cell B8', 'Cell C8'],
             // A Cell with different font
             ['', '', {text: 'Cell C9', align: 'right', font: {name : './test/fonts/arialbd.ttf'}, border: {color: '#000000', style: 'double', position: ['bottom']}}]
         ];
