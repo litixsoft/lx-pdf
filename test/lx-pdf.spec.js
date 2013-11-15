@@ -20,6 +20,7 @@ describe('lx-pdf', function () {
         expect(typeof sut.print).toBe('function');
         expect(typeof sut.clear).toBe('function');
         expect(typeof sut.resetDocumentIndices).toBe('function');
+        expect(typeof sut.showTextboxframe).toBe('function');
     });
 
     it('should be loads a wrong template', function() {
@@ -64,8 +65,12 @@ describe('lx-pdf', function () {
             ['', '', {text: 'Cell C9 €', align: 'right', font: {name : './test/fonts/arialbd.ttf'}, border: {color: '#000000', style: 'double', position: ['bottom']}}]
         ];
 
+        // Enable Textboxes
+        sut.showTextboxframe(true);
+
         sut.addTable('area51', tableData, tableHeader);
         sut.addContent('area51', bigTextNumberFour);
+        sut.addTable('area51', ['Col A', 'Col B', 'Col C', 'Col D']);
 
         sut.addImage('area51', './test/images/litixlogo.png', {});
 
