@@ -43,9 +43,9 @@ describe('lx-pdf', function () {
 
         // Table
         var tableHeader = [
-            {text: 'Column 1', width: 160, align: 'left', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}},
-            {text: 'Column 2', width: 161, align: 'left', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}},
-            {text: 'Column 3', width: 160, align: 'right', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}}
+            {text: 'Column 1', width: 120, align: 'left', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}},
+            {text: 'Column 2', width: 260, align: 'left', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}},
+            {text: 'Column 3', width: 100, align: 'right', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}}
         ];
 
         var tableData = [
@@ -62,7 +62,8 @@ describe('lx-pdf', function () {
             // Draw a row with cell lines. Option "linemode" says, use border for every next cell in this line
             [{text: 'Cell A8', border: {color: '#000000', style: 'normal', position: ['bottom', 'top'], linemode: true, linewidth: 2}}, 'Cell B8', 'Cell C8'],
             // A Cell with different font, the € Symbol is ignored by PDF Kit for text width calculation.
-            ['', '', {text: 'Cell C9 €', align: 'right', font: {name : './test/fonts/arialbd.ttf'}, border: {color: '#000000', style: 'double', position: ['bottom']}}]
+            [{text: 'Colspan over "2" Cells, thats cool', colspan: 2, align: 'center', font: {name : './test/fonts/arialbd.ttf'}, border: {color: '#000000', position: ['bottom', 'left', 'right']}}, 'One Cell'],
+            [{text: 'Colspan over "3" Cells, thats cool', colspan: 3, align: 'center', font: {name : './test/fonts/arialbd.ttf'}, border: {color: '#000000', style: 'double', position: ['bottom']}}]
         ];
 
         // Enable Textboxes
