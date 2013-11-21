@@ -14,9 +14,13 @@ describe('lx-pdf', function () {
         expect(typeof sut.loadTemplate).toBe('function');
         expect(typeof sut.addContent).toBe('function');
         expect(typeof sut.addTable).toBe('function');
+        expect(typeof sut.addImage).toBe('function');
+        expect(typeof sut.addPageBreak).toBe('function');
         expect(typeof sut.save).toBe('function');
         expect(typeof sut.print).toBe('function');
-        expect(typeof sut.addImage).toBe('function');
+        expect(typeof sut.clear).toBe('function');
+        expect(typeof sut.resetDocumentIndices).toBe('function');
+        expect(typeof sut.showTextboxframe).toBe('function');
     });
 
     it('should be loads a wrong template', function() {
@@ -29,7 +33,7 @@ describe('lx-pdf', function () {
         expect(sut.addContent('linebreak', 'This text is too width. And should be automatic break.')).toBeTruthy();
         expect(sut.addContent('noneexits', 'This text will never display.')).toBeTruthy();
 
-        expect(sut.addContent('date', '31.12.1234')).toBeTruthy();
+        expect(sut.addContent('date', '31.12.2013')).toBeTruthy();
         expect(sut.addContent('subject', 'Small Test')).toBeTruthy();
         expect(sut.addContent('content', 'Content for Page')).toBeTruthy();
 
@@ -37,12 +41,11 @@ describe('lx-pdf', function () {
         expect(sut.addContent('area51', bigTextNumberTwo)).toBeTruthy();
         expect(sut.addContent('area51', bigTextNumberThree)).toBeTruthy();
 
-
         // Table
         var tableHeader = [
-            {text: 'Column 1', width: 160, align: 'left', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}},
-            {text: 'Column 2', width: 161, align: 'left', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}},
-            {text: 'Column 3', width: 160, align: 'right', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}}
+            {text: 'Column 1', width: 120, align: 'left', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}},
+            {text: 'Column 2', width: 260, align: 'left', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}},
+            {text: 'Column 3', width: 100, align: 'right', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}}
         ];
 
         var tableData = [
@@ -56,13 +59,19 @@ describe('lx-pdf', function () {
             // A Row with Styling in CELL B6
             ['Cell A6', {text: 'Cell B6', align: 'right', font: {color: '#FF00FF'}}, 'Cell C6'],
             ['Cell A7', 'Cell B7', 'Cell C7'],
-            ['Cell A8', 'Cell B8', 'Cell C8'],
-            // A Cell with different font
-            ['', '', {text: 'Cell C9', align: 'right', font: {name : './test/fonts/arialbd.ttf'}}]
+            // Draw a row with cell lines. Option "linemode" says, use border for every next cell in this line
+            [{text: 'Cell A8', border: {color: '#000000', style: 'normal', position: ['bottom', 'top'], linemode: true, linewidth: 2}}, 'Cell B8', 'Cell C8'],
+            // A Cell with different font, the € Symbol is ignored by PDF Kit for text width calculation.
+            [{text: 'Colspan over "2" Cells, thats cool', colspan: 2, align: 'center', font: {name : './test/fonts/arialbd.ttf'}, border: {color: '#000000', position: ['bottom', 'left', 'right']}}, 'One Cell'],
+            [{text: 'Colspan over "3" Cells, thats cool', colspan: 3, align: 'center', font: {name : './test/fonts/arialbd.ttf'}, border: {color: '#000000', style: 'double', position: ['bottom']}}]
         ];
+
+        // Enable Textboxes
+        sut.showTextboxframe(true);
 
         sut.addTable('area51', tableData, tableHeader);
         sut.addContent('area51', bigTextNumberFour);
+        sut.addTable('area51', ['Col A', 'Col B', 'Col C', 'Col D']);
 
         sut.addImage('area51', './test/images/litixlogo.png', {});
 
@@ -92,6 +101,20 @@ describe('lx-pdf', function () {
                             }
                         },
                         sections: {
+                            header: {
+                                font  : {
+                                    name : './test/fonts/arial.ttf',
+                                    size : 12,
+                                    color: '#000000'
+                                },
+                                format: {
+                                    align : 'left',
+                                    left  : 70,
+                                    top   : 50,
+                                    width : 481,
+                                    height: 300
+                                }
+                            },
                             content: {
                                 font  : {
                                     name : './test/fonts/arial.ttf',
@@ -107,13 +130,55 @@ describe('lx-pdf', function () {
                                 }
                             }
                         }
+                    },
+                    {
+                        layout    : {
+                            size   : 'A4',
+                            layout : 'portrait',
+                            margins: {
+                                top   : 0,
+                                left  : 0,
+                                bottom: 0,
+                                right : 0
+                            }
+                        },
+                        sections: {
+                            content: {
+                                font  : {
+                                    name : './test/fonts/arial.ttf',
+                                    size : 12,
+                                    color: '#000000'
+                                },
+                                format: {
+                                    align : 'left',
+                                    left  : 70,
+                                    top   : 50,
+                                    width : 481,
+                                    height: 620
+                                }
+                            }
+                        }
                     }
                 ]
             }
         };
 
         sut.loadTemplate(simpleTemplate);
-        sut.addContent('content', 'Hello World!');
+
+        sut.clear();
+
+        expect(sut.addContent('header', 'Hello World!')).toBeTruthy();
+        expect(sut.addContent('content', 'Hello World!')).toBeTruthy();
+
+        sut.addPageBreak();
+
+        expect(sut.addContent('header', 'Hello World!')).toBeTruthy();
+        expect(sut.addContent('content', 'Hello World!')).toBeTruthy();
+
+        sut.resetDocumentIndices();
+
+        expect(sut.addContent('header', 'Hello World!')).toBeTruthy();
+        expect(sut.addContent('content', 'Hello World!')).toBeTruthy();
 
         sut.print(function(result) {
             expect(result).toBeDefined();

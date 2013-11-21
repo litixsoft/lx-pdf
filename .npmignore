@@ -1,5 +1,9 @@
 .git*
 .idea
 .travis.yml
+atlassian-ide-plugin.xml
 Gruntfile.js
 test/
+build
+node_modules
+Dummy.pdf
