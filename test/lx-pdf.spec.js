@@ -44,26 +44,28 @@ describe('lx-pdf', function () {
         // Table
         var tableHeader = [
             {text: 'Column 1', width: 120, align: 'left', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}},
-            {text: 'Column 2', width: 260, align: 'left', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}},
-            {text: 'Column 3', width: 100, align: 'right', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}}
+            {text: 'Column 2', width: 180, align: 'left', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}},
+            {text: 'Column 3', width: 100, align: 'center', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}},
+            {text: 'Column 4', width:  80, align: 'right', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}}
         ];
 
         var tableData = [
             // Simple Row
-            ['Cell A1', 'Cell B1', 'Cell C1'],
+            ['Cell A1', 'Cell B1', 'Cell C1', 'Cell D1'],
             // Simple Row with empty text
-            ['Cell A2', '', 'Cell C2'],
-            ['Cell A3', 'Cell B3', 'Cell C3'],
-            ['Cell A4', 'Cell B4', 'Cell C4'],
-            ['Cell A5', 'Cell B5', 'Cell C5'],
+            ['Cell A2', '', '', 'Cell D2'],
+            ['Cell A3', 'Cell B3', 'Cell C3', 'Cell D3'],
+            ['Cell A4', 'Cell B4', 'Cell C4', 'Cell D3'],
+            ['Cell A5', 'Cell B5', 'Cell C5', 'Cell D3'],
             // A Row with Styling in CELL B6
-            ['Cell A6', {text: 'Cell B6', align: 'right', font: {color: '#FF00FF'}}, 'Cell C6'],
-            ['Cell A7', 'Cell B7', 'Cell C7'],
+            ['Cell A6', {text: 'Cell B6', align: 'right', font: {color: '#FF00FF'}}, 'Cell C6', 'Cell D6'],
+            ['Cell A7', 'Cell B7', 'Cell C7', 'Cell D7'],
             // Draw a row with cell lines. Option "linemode" says, use border for every next cell in this line
             [{text: 'Cell A8', border: {color: '#000000', style: 'normal', position: ['bottom', 'top'], linemode: true, linewidth: 2}}, 'Cell B8', 'Cell C8'],
             // A Cell with different font, the € Symbol is ignored by PDF Kit for text width calculation.
-            [{text: 'Colspan over "2" Cells, thats cool', colspan: 2, align: 'center', font: {name : './test/fonts/arialbd.ttf'}, border: {color: '#000000', position: ['bottom', 'left', 'right']}}, 'One Cell'],
-            [{text: 'Colspan over "3" Cells, thats cool', colspan: 3, align: 'center', font: {name : './test/fonts/arialbd.ttf'}, border: {color: '#000000', style: 'double', position: ['bottom']}}]
+            [{text: 'Colspan over "2" Cells, thats cool', colspan: 2, align: 'center', font: {name : './test/fonts/arialbd.ttf'}, border: {color: '#000000', position: ['top', 'bottom', 'left', 'right']}}, '', {text: 'One Cell', align: 'right'}],
+            ['', {text: 'Colspan over "3" Cells, thats cool', colspan: 3, align: 'center', font: {name : './test/fonts/arialbd.ttf'}, border: {color: '#000000', position: ['top', 'bottom', 'left', 'right']}}],
+            [{text: 'Colspan over "4" Cells, thats cool', colspan: 4, align: 'center', font: {name : './test/fonts/arialbd.ttf'}, border: {color: '#000000', style: 'double', position: ['bottom']}}]
         ];
 
         // Enable Textboxes
@@ -71,6 +73,8 @@ describe('lx-pdf', function () {
 
         sut.addTable('area51', tableData, tableHeader);
         sut.addContent('area51', bigTextNumberFour);
+
+        // Add Table without Header
         sut.addTable('area51', ['Col A', 'Col B', 'Col C', 'Col D']);
 
         sut.addImage('area51', './test/images/litixlogo.png', {});
