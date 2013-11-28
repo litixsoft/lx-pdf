@@ -8,6 +8,9 @@ var bigTextNumberTwo = '\n1956 wechselte Gorton zum Fernsehen und entwarf für d
 var bigTextNumberThree = '\n\nLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet.\n';
 var bigTextNumberFour = '\n\nThis section demonstrates how to sign code by creating digital signatures and associating them with files using Microsoft Authenticode technology. Creating a fully verifiable certificate might assume the existence of a complex hierarchy of certification authorities. A root certificate and a root private key are provided for testing purposes only. Independent software vendors (ISVs) must obtain a certificate from a certification authority that is trusted by default in Windows. (For a list of trusted certification authority (CA) see Microsoft Root Certificate Program Members.)';
 
+var fontNormal = './test/fonts/arial.ttf';
+var fontBold = './test/fonts/arialbd.ttf';
+
 describe('lx-pdf', function () {
     it('should be initialized correctly', function () {
         expect(sut).toBeDefined();
@@ -43,10 +46,10 @@ describe('lx-pdf', function () {
 
         // Table
         var tableHeader = [
-            {text: 'Column 1', width: 120, align: 'left', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}},
-            {text: 'Column 2', width: 180, align: 'left', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}},
-            {text: 'Column 3', width: 100, align: 'center', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}},
-            {text: 'Column 4', width:  80, align: 'right', font: {name : './test/fonts/arialbd.ttf', size : 12, color: '#000000'}}
+            {text: 'Column 1', width: 120, align: 'left', font: {name : fontBold, size : 12, color: '#000000'}},
+            {text: 'Column 2', width: 180, align: 'left', font: {name : fontBold, size : 12, color: '#000000'}},
+            {text: 'Column 3', width: 100, align: 'center', font: {name : fontBold, size : 12, color: '#000000'}},
+            {text: 'Column 4', width:  80, align: 'right', font: {name : fontBold, size : 12, color: '#000000'}}
         ];
 
         var tableData = [
@@ -63,9 +66,9 @@ describe('lx-pdf', function () {
             // Draw a row with cell lines. Option "linemode" says, use border for every next cell in this line
             [{text: 'Cell A8', border: {color: '#000000', style: 'normal', position: ['bottom', 'top'], linemode: true, linewidth: 2}}, 'Cell B8', 'Cell C8'],
             // A Cell with different font, the € Symbol is ignored by PDF Kit for text width calculation.
-            [{text: 'Colspan over "2" Cells, thats cool', colspan: 2, align: 'center', font: {name : './test/fonts/arialbd.ttf'}, border: {color: '#000000', position: ['top', 'bottom', 'left', 'right']}}, '', {text: 'One Cell', align: 'right'}],
-            ['', {text: 'Colspan over "3" Cells, thats cool', colspan: 3, align: 'center', font: {name : './test/fonts/arialbd.ttf'}, border: {color: '#000000', position: ['top', 'bottom', 'left', 'right']}}],
-            [{text: 'Colspan over "4" Cells, thats cool', colspan: 4, align: 'center', font: {name : './test/fonts/arialbd.ttf'}, border: {color: '#000000', style: 'double', position: ['bottom']}}]
+            [{text: 'Colspan over "2" Cells, thats cool', colspan: 2, align: 'center', font: {name : fontBold}, border: {color: '#000000', position: ['top', 'bottom', 'left', 'right']}}, '', {text: 'One Cell', align: 'right'}],
+            ['', {text: 'Colspan over "3" Cells, thats cool', colspan: 3, align: 'center', font: {name : fontBold}, border: {color: '#000000', position: ['top', 'bottom', 'left', 'right']}}],
+            [{text: 'Colspan over "4" Cells, thats cool', colspan: 4, align: 'center', font: {name : fontBold}, border: {color: '#000000', style: 'double', position: ['bottom']}}]
         ];
 
         // Enable Textboxes
@@ -82,6 +85,61 @@ describe('lx-pdf', function () {
         sut.addContent('area51', 'A Image above');
 
         sut.save('Dummy.pdf', function(result) {
+            expect(result).toBeNull();
+        });
+
+        waits(1000);
+    });
+
+    it('invoice pdf', function () {
+        function getCell(text, width, align, font) {
+            return {
+                text: text,
+                width: width,
+                align: align || 'left',
+                font: font || fontNormal
+            };
+        }
+
+        function addSummary(data, offsetColspan, colspan) {
+            var offset = { text: '', colspan: offsetColspan };
+            data.tablebody.push(
+                [offset, { text: 'Gesamt netto:', align: 'left', font: fontBold, colspan: colspan }, { text: data.summary, align: 'right', font: fontBold }]);
+        }
+
+        var invoice = {
+            summary: '4.100,00 €',
+            tablehead: [
+                getCell('Pos', 40),
+                getCell('Leistungsbeschreibung', 200),
+                getCell('Kosten / Einheit', 100),
+                getCell('Einheiten', 50, 'right'),
+                getCell('Betrag (netto)', 76, 'right')
+            ],
+            tablebody: [
+                [1, 'Null', '60.00 €', 5, '300.00 €'],
+                [1, 'Nil', '95.00 €', 2, '190.00 €'],
+                ['']
+            ]
+        };
+
+        addSummary(invoice, 2, 2, 0);
+
+        sut.loadTemplate('./test/templates/invoice.json');
+        sut.showTextboxframe(false);
+
+        sut.addContent('address', 'Anrede\nVorname Nachname\nStraße\n\nPLZ Ort');
+        sut.addContent('info', 'Kundennummer: KDR 08741\nRechnungsnummer: RE 0815 00\n\n\nDatum: 01.11.2013');
+        sut.addContent('subject', 'Rechnung');
+
+        sut.addContent('content', 'Sehr geehrte Damen und Herren,\n\ndie unten aufgelisteten Positionen stellen wir ihnen in Rechnung:\n');
+
+        sut.addTable('content', invoice.tablebody, invoice.tablehead);
+
+        sut.addContent('content', '\nBitte überweisen Sie den Gesamtbetrag in Höhe von ' + invoice.summary.toString() + ' € innnerhalb von 2 Wochen nach Erhalt dieser Rechnung unter Angabe der Kunden- und Rechnungsnummer auf das Konto Nr 000 000 00 00 bei dem Geldinstitut Leipzig BLZ 000 000 00. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diama.');
+        sut.addContent('content', '\nVielen Dank.\n\nDieses Schreiben wurde maschinell oder von gen-manipulierten Affen erstellt und ist ohne Unterschrift gültig.');
+
+        sut.save('invoice.pdf', function(result) {
             expect(result).toBeNull();
         });
 
