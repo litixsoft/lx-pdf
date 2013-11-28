@@ -1,0 +1,174 @@
+{
+    "name": "Invoice Template",
+    "footer": {
+        "font": {
+            "name": "./test/fonts/arial.ttf",
+            "size": 6,
+            "color": "#F0F0F0"
+        },
+        "format": {
+            "align": "center",
+            "height": 60,
+            "textmargin": {
+                "left": 10,
+                "top": 10,
+                "right": 10
+            },
+            "background": "#000000"
+        },
+        "data": [
+            [
+                {
+                    "text": "ANSCHRIFT",
+                    "align": "left",
+                    "font": {
+                        "color": "#5087cb",
+                        "size": 8,
+                        "name": "./test/fonts/arialbd.ttf"
+                    }
+                },
+                {
+                    "text": "KONTAKT",
+                    "align": "left",
+                    "font": {
+                        "color": "#5087cb",
+                        "size": 8,
+                        "name": "./test/fonts/arialbd.ttf"
+                    }
+                },
+                {
+                    "text": "GESCHÄFTSFÜHRUNG",
+                    "align": "left",
+                    "font": {
+                        "color": "#5087cb",
+                        "size": 8,
+                        "name": "./test/fonts/arialbd.ttf"
+                    }
+                },
+                {
+                    "text": "BANKVERBINDUNG",
+                    "align": "left",
+                    "font": {
+                        "color": "#5087cb",
+                        "size": 8,
+                        "name": "./test/fonts/arialbd.ttf"
+                    }
+                }
+            ],
+            [
+                "Name\nStraße Nr\nPLZ Ort",
+                "Tel.:    0341 000 000 00\nFax:     0341 000 000 00\nE-Mail:  info@litixsoft.de\nWeb:     www.litixsoft.de",
+                "Vorname Nachname\nNummer",
+                "Geldinstitut Leipzig\nKonto-Nr. 000 000 00 00\nBLZ 000 000 00\nUSt-ID DE000000000"
+            ]
+        ]
+    },
+    "options": {
+        "pages": [
+            {
+                "layout": {
+                    "size": "A4",
+                    "layout": "portrait",
+                    "margins": {
+                        "top": 0,
+                        "left": 0,
+                        "bottom": 0,
+                        "right": 0
+                    }
+                },
+                "background": {
+                    "filename": "./test/images/litixlogo.png"
+                },
+                "sections": {
+                    "address": {
+                        "font": {
+                            "name": "./test/fonts/arial.ttf",
+                            "size": 11,
+                            "color": "#000000"
+                        },
+                        "format": {
+                            "align": "justify",
+                            "left": 70,
+                            "top": 145,
+                            "width": 300,
+                            "height": 135
+                        }
+                    },
+                    "info": {
+                        "font": {
+                            "name": "./test/fonts/arial.ttf",
+                            "size": 10,
+                            "color": "#000000"
+                        },
+                        "format": {
+                            "align": "left",
+                            "left": 370,
+                            "top": 150,
+                            "width": 180,
+                            "height": 130
+                        }
+                    },
+                    "subject": {
+                        "font": {
+                            "name": "./test/fonts/arialbd.ttf",
+                            "size": 11,
+                            "color": "#000000"
+                        },
+                        "format": {
+                            "align": "left",
+                            "left": 70,
+                            "top": 280,
+                            "width": 480,
+                            "height": 30
+                        }
+                    },
+                    "content": {
+                        "font": {
+                            "name": "./test/fonts/arial.ttf",
+                            "size": 10,
+                            "color": "#000000"
+                        },
+                        "format": {
+                            "align": "justify",
+                            "left": 70,
+                            "top": 310,
+                            "width": 480,
+                            "height": 450
+                        }
+                    }
+                }
+            },
+            {
+                "layout": {
+                    "size": "A4",
+                    "layout": "portrait",
+                    "margins": {
+                        "top": 0,
+                        "left": 0,
+                        "bottom": 0,
+                        "right": 0
+                    }
+                },
+                "background": {
+                    "filename": "./test/images/litixlogo.png"
+                },
+                "sections": {
+                    "content": {
+                        "font": {
+                            "name": "./test/fonts/arial.ttf",
+                            "size": 10,
+                            "color": "#000000"
+                        },
+                        "format": {
+                            "align": "justify",
+                            "left": 70,
+                            "top": 145,
+                            "width": 480,
+                            "height": 620
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}
