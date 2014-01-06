@@ -139,6 +139,9 @@ describe('lx-pdf', function () {
         sut.addContent('content', '\nBitte überweisen Sie den Gesamtbetrag in Höhe von ' + invoice.summary.toString() + ' € innnerhalb von 2 Wochen nach Erhalt dieser Rechnung unter Angabe der Kunden- und Rechnungsnummer auf das Konto Nr 000 000 00 00 bei dem Geldinstitut Leipzig BLZ 000 000 00. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diama.');
         sut.addContent('content', '\nVielen Dank.\n\nDieses Schreiben wurde maschinell oder von gen-manipulierten Affen erstellt und ist ohne Unterschrift gültig.');
 
+        sut.addPageBreak();
+        sut.addContent('content', 'Landscape Format? Nice! No Header, ho Footer? No Problem. Turn it off.');
+
         sut.save('invoice.pdf', function(result) {
             expect(result).toBeNull();
         });
