@@ -1,13 +1,13 @@
 # lx-pdf [![Build Status](https://travis-ci.org/litixsoft/lx-pdf.png?branch=master)](https://travis-ci.org/litixsoft/lx-pdf) [![david-dm](https://david-dm.org/litixsoft/lx-pdf.png)](https://david-dm.org/litixsoft/lx-pdf/) [![david-dm](https://david-dm.org/litixsoft/lx-pdf/dev-status.png)](https://david-dm.org/litixsoft/lx-pdf#info=devDependencies&view=table)
 
-> pdf library for creating pdf files in node.js.
+>Easy to use template-based pdf document generator in node.js. Required pdf-kit.
 
 ## Install:
 
 [![NPM](https://nodei.co/npm/lx-pdf.png??downloads=true&stars=true)](https://nodei.co/npm/lx-pdf/)
 
 ## Usage
-Use with template file.
+Usage with template file.
 
 ```js
 var lxDocument = require('lx-pdf.js')('template.json');
@@ -26,22 +26,32 @@ lxDocument.save('document.pdf', function(result) {
 ```
 
 ### Structure of a template
-Beispiel Template für ein Dokument im JSON Format. Das Layout sowie die Sektionen gelten immer für eine Seite. Die letzte Seite wird dann für die darauffolgenden wiederholt.
+A sample document template in JSON. A Page Layout and there sections defined for one page only. If no following page definied then the last page is repeated.
 
 ```js
 {
+    "header": { // see Page Header and Footer
+    	"font": { ... },
+        "format": { ... },
+        "data": [ ... ]
+    },
+	"footer": { // see Page Header and Footer
+    	"font": { ... },
+        "format": { ... },
+        "data": [ ... ]
+    },
     "options": {
-        "pages": [
+        "pages": [ // Page setup
             {
                 "layout": {
-                    ... // Seitenlayout
+                    ... // see Layout
                 },
                 "background": {
-                    ... // Seitenhintergrund
+                    ... // see Background
                 },
                 "sections": {
                     "content": {
-                        ... // Sektion "CONTENT" für die Seite
+                        ... // Section "CONTENT"
                     }
                 }
             }
@@ -51,13 +61,15 @@ Beispiel Template für ein Dokument im JSON Format. Das Layout sowie die Sektion
 ```
 
 #### Layout
-Das Layout beschreibt die Größe sowie die Ausrichtung der Seite.
+A layout describes the size and the orientation.
 
 ```js
 {
     "layout": {
         "size": "A4", // DIN Format
-        "layout": "portrait", // Ausrichtung portait|landscape
+        "header": false, // Turns OFF defined header area, default is turned on
+        "footer": false, // Turns OFF defined footer area, default is turned on
+        "layout": "portrait", // Orientation portait|landscape
         "margins": {
             "top": 0,
             "left": 0,
@@ -69,7 +81,8 @@ Das Layout beschreibt die Größe sowie die Ausrichtung der Seite.
 ```
 
 #### Background
-Als Hintgrund kann ein Bild verwendet werden. Ideal für Briefvorlagen.
+You can use a image as background. Perfect for letter templates.
+Supported image formats: .PNG and .JPEG.
 
 ```js
 {
@@ -82,20 +95,67 @@ Als Hintgrund kann ein Bild verwendet werden. Ideal für Briefvorlagen.
 }
 ```
 
-#### Sections
-Die Sektion beschreibt ein Element auf der Seite, mit Größe, Ausrichtung, Schriftart und Schriftgröße.
+#### Font and Format
+
+```js
+	...
+    "font": {
+        "name": "./fonts/arial.ttf", // Filename of the True Type Font
+        "size": 12, // Fonzsize
+        "color": "#000000" // Fontcolor
+    }
+    ...
+    "format": {
+        "align": "justify", // Text Alignment left|right|justify
+        "left": 70,
+        "top": 670,
+        "width": 481,
+        "height": 70,
+        "textmargin": {
+        	"left": 5,
+            "top": 5,
+            "right": 5,
+            "bottom": 5
+        }
+    }
+    ...
+```
+
+#### Page Header and Footer
+Define your pageheader and footer.
 
 ```js
 {
-    "content": { // Sektionsname
+  ...
+  "header": {
+    "font": { ... },
+    "format": { ... }, // HINT: left, top, right value will be ignored
+    "data": [ ... ]
+  }
+  "footer"  : {
+    "font": { ... },
+    "format": { ... }, // HINT: left, top, right value will be ignored
+    "data": [ ... ]
+  }
+  ...
+}
+```
+
+#### Sections
+A section defined a area of the page. You can usage size, orientation, fontstyle, fontsize, aligment.
+
+```js
+{
+    "content": { // Sectionname
+    	"text": "",  // Default text or table object. There will be always showed.
         "font": {
-            "name": "./fonts/arial.ttf", // Dateiname
-            "size": 12,
+            "name": "./fonts/arial.ttf", // Filename
+            "size": 12, // Fonzsize
             "color": "#000000"
         },
         "format": {
             "align": "justify", // left|right|justify
-             "left": 70,
+            "left": 70,
             "top": 670,
             "width": 481,
             "height": 70
@@ -105,8 +165,8 @@ Die Sektion beschreibt ein Element auf der Seite, mit Größe, Ausrichtung, Schr
 ```
 
 ### Working with sections
-#### tables
-Darstellung einer Tabelle mit drei Spalten, sowie Kopfbezeichnung.
+#### Tables
+Display table with three columns and a head row.
 
 ```js
 {// The table header
@@ -190,9 +250,9 @@ var tableData = [
 lxDocument.addTable('content', tableData, tableHeader);
 ```
 
-#### Zellenformatierung
+#### Cellformats
 
-Pro Zelle sind verschiedene Formatierungen möglich. Diese können dann auch Zeilenweit gesetzt werden.
+Per cell you can defined different formats, but you can also describe it per row.
 
 ```js
 var cellFormat = {
