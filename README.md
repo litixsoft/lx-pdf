@@ -286,6 +286,47 @@ var cellFormat = {
 }
 ```
 
+### lx-pdf Api
+
+Loads a template object.
+```js
+loadTemplate(templateobject);
+```
+
+Reset document.
+```js
+sut.clear();
+```
+
+Add text or table object to current page.
+```js
+sut.addContent(sectionname, sectiondata)
+```
+
+Performs a manual pagebreak.
+```js
+sut.addPageBreak();
+```
+
+Reset document, keep all data and start with page 1. Batch Job.
+```js
+sut.resetDocumentIndices();
+```
+
+Saves the document as pdf file to storage. If (result) is undefined then success.
+```js
+save(filename, function(result) {
+	...
+});
+```
+
+Returns document as string (data).
+```js
+print(function(data) {
+	...
+})
+```
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt](http://gruntjs.com/).
 
