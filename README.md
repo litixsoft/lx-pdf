@@ -1,6 +1,6 @@
 # lx-pdf [![Build Status](https://travis-ci.org/litixsoft/lx-pdf.png?branch=master)](https://travis-ci.org/litixsoft/lx-pdf) [![david-dm](https://david-dm.org/litixsoft/lx-pdf.png)](https://david-dm.org/litixsoft/lx-pdf/) [![david-dm](https://david-dm.org/litixsoft/lx-pdf/dev-status.png)](https://david-dm.org/litixsoft/lx-pdf#info=devDependencies&view=table)
 
->Easy to use template-based pdf document generator in node.js. Required pdf-kit.
+>Easy to use template-based pdf document generator in node.js.
 
 ## Install:
 
@@ -30,6 +30,7 @@ A sample document template in JSON. A Page Layout and there sections defined for
 
 ```js
 {
+	"fonts": { ... }, // Font templates
     "header": { // see Page Header and Footer
     	"font": { ... },
         "format": { ... },
@@ -97,14 +98,17 @@ Supported image formats: .PNG and .JPEG.
 
 #### Font and Format
 
+The font object
 ```js
-	...
-    "font": {
-        "name": "./fonts/arial.ttf", // Filename of the True Type Font
-        "size": 12, // Fonzsize
-        "color": "#000000" // Fontcolor
+	"font": {
+        "name": "./fonts/arial.ttf", // True Type Font
+        "size": 12, // Size
+        "color": "#000000" // Color
     }
-    ...
+```
+
+The format object
+```js
     "format": {
         "align": "justify", // Text Alignment left|right|justify
         "left": 70,
@@ -118,7 +122,20 @@ Supported image formats: .PNG and .JPEG.
             "bottom": 5
         }
     }
-    ...
+```
+
+For better handling your can define font templates.
+```js
+{
+	"fonts", {
+    	"default": { ... }, // Default font, used if no font definied
+        "body": {
+        	"name": "./fonts/arialbd.ttf"
+            "size": 10,
+            "color": "#000000"
+        }
+    }
+}
 ```
 
 #### Page Header and Footer
@@ -148,11 +165,7 @@ A section defined a area of the page. You can usage size, orientation, fontstyle
 {
     "content": { // Sectionname
     	"text": "",  // Default text or table object. There will be always showed.
-        "font": {
-            "name": "./fonts/arial.ttf", // Filename
-            "size": 12, // Fonzsize
-            "color": "#000000"
-        },
+        "font": "body", // Defined font template name, or font object
         "format": {
             "align": "justify", // left|right|justify
             "left": 70,
