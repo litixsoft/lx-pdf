@@ -97,14 +97,14 @@ describe('lx-pdf', function () {
                 text: text,
                 width: width,
                 align: align || 'left',
-                font: font || fontNormal
+                font: font || {name: fontNormal}
             };
         }
 
         function addSummary(data, offsetColspan, colspan) {
             var offset = { text: '', colspan: offsetColspan };
             data.tablebody.push(
-                [offset, { text: 'Gesamt netto:', align: 'left', font: fontBold, colspan: colspan }, { text: data.summary, align: 'right', font: fontBold }]);
+                [offset, { text: 'Gesamt netto:', align: 'left', font: {name : fontBold}, colspan: colspan }, { text: data.summary, align: 'right', font: {name : fontBold} }]);
         }
 
         var invoice = {

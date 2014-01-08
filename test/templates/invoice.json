@@ -1,5 +1,17 @@
 {
     "name": "Invoice Template",
+    "fonts": {
+        "default": {
+            "name": "./test/fonts/arial.ttf",
+            "size": 10,
+            "color": "#0A0A0A"
+        },
+        "footer_header": {
+            "color": "#5087cb",
+            "size": 8,
+            "name": "./test/fonts/arialbd.ttf"
+        }
+    },
     "footer": {
         "font": {
             "name": "./test/fonts/arial.ttf",
@@ -21,38 +33,22 @@
                 {
                     "text": "ANSCHRIFT",
                     "align": "left",
-                    "font": {
-                        "color": "#5087cb",
-                        "size": 8,
-                        "name": "./test/fonts/arialbd.ttf"
-                    }
+                    "font": "footer_header"
                 },
                 {
                     "text": "KONTAKT",
                     "align": "left",
-                    "font": {
-                        "color": "#5087cb",
-                        "size": 8,
-                        "name": "./test/fonts/arialbd.ttf"
-                    }
+                    "font": "footer_header"
                 },
                 {
                     "text": "GESCHÄFTSFÜHRUNG",
                     "align": "left",
-                    "font": {
-                        "color": "#5087cb",
-                        "size": 8,
-                        "name": "./test/fonts/arialbd.ttf"
-                    }
+                    "font": "footer_header"
                 },
                 {
                     "text": "BANKVERBINDUNG",
                     "align": "left",
-                    "font": {
-                        "color": "#5087cb",
-                        "size": 8,
-                        "name": "./test/fonts/arialbd.ttf"
-                    }
+                    "font": "footer_header"
                 }
             ],
             [
@@ -113,11 +109,7 @@
                         }
                     },
                     "info": {
-                        "font": {
-                            "name": "./test/fonts/arial.ttf",
-                            "size": 10,
-                            "color": "#000000"
-                        },
+                        "font": "default",
                         "format": {
                             "align": "left",
                             "left": 370,
@@ -141,11 +133,7 @@
                         }
                     },
                     "content": {
-                        "font": {
-                            "name": "./test/fonts/arial.ttf",
-                            "size": 10,
-                            "color": "#000000"
-                        },
+                        "font": "default",
                         "format": {
                             "align": "justify",
                             "left": 70,
@@ -171,11 +159,7 @@
                 },
                 "sections": {
                     "content": {
-                        "font": {
-                            "name": "./test/fonts/arial.ttf",
-                            "size": 10,
-                            "color": "#000000"
-                        },
+                        "font": "default",
                         "format": {
                             "align": "justify",
                             "left": 70,
