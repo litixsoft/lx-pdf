@@ -123,7 +123,7 @@ describe('lx-pdf', function () {
         // Table
         var tableHeader = [
             {text: 'Column 1', width: 120, align: 'left', font: {name: fontBold, size: 12, color: '#000000'}},
-            {text: 'Column 2', width: 180, align: 'left', font: {name: fontBold, size: 12, color: '#000000'}},
+            {text: 'Column 2', align: 'left', font: {name: fontBold, size: 12, color: '#000000'}},
             {text: 'Column 3', width: 100, align: 'center', font: {name: fontBold, size: 12, color: '#000000'}},
             {text: 'Column 4', width: 80, align: 'right', font: {name: fontBold, size: 12, color: '#000000'}}
         ];
@@ -143,7 +143,8 @@ describe('lx-pdf', function () {
             [
                 {text: 'Cell A8', border: {color: '#000000', style: 'normal', position: ['bottom', 'top'], linemode: true, linewidth: 2}},
                 'Cell B8',
-                'Cell C8'
+                'Cell C8',
+                'Cell D8'
             ],
             // A Cell with different font, the € Symbol is ignored by PDF Kit for text width calculation.
             [
