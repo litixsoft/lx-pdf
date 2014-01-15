@@ -261,10 +261,11 @@ describe('lx-pdf', function () {
         expect(sut.addContent('header', 'Hello World!')).toBeTruthy();
         expect(sut.addContent('content', 'Hello World!')).toBeTruthy();
 
-        sut.print(function (result) {
-            expect(result).toBeDefined();
-            expect(typeof result).toBe('object');
-            expect(result.length).toBe(2);
+        sut.print(function (result, error) {
+            expect(result).toBeNull();
+            expect(error).toBeDefined();
+            expect(typeof error).toBe('object');
+            expect(error.length).toBe(2);
         });
     });
 
@@ -284,7 +285,8 @@ describe('lx-pdf', function () {
 
         expect(sut.addContent('content', 'Hello World!')).toBeTruthy();
 
-        sut.print(function (result) {
+        sut.print(function (result, error) {
+            expect(error).toBeNull();
             expect(result).toBeDefined();
             expect(typeof result).toBe('string');
         });
