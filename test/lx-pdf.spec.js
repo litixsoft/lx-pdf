@@ -1,7 +1,7 @@
 /*global describe, it, expect, waits*/
 'use strict';
 
-var sut = require('../lib/lx-pdf.js')('test/templates/template.json');
+var sut = require('./lib/lx-pdf.js')('test/templates/template.json');
 
 var bigTextNumberOne = 'Gerald Geisler wurde in eine im österreichischen Galopprennsport involvierte Familie geboren und kam dadurch schon früh in Kontakt mit Pferden. Seine erste Morgenarbeit ritt er fünfzehnjährig auf den Pferden des familieneigenen Rennstalles Hernstein an der Galopprennbahn Freudenau in Wien. Seine Karriere als Amateurrennreiter begann er im Alter von 17 Jahren siegreich auf Pink Floyd. Im Laufe der Zeit kamen Siege in Italien, Slowakei und der Schweiz hinzu. Den Höhepunkt seiner Amateurrennreiterkarriere bildet sicherlich sein Antreten für Österreich im Fegentri. Seine schulische Laufbahn beinhaltet die Matura am Wiedner Gymnasium, einige Semester Jus sowie den Abschluss eines kaufmännischen Kollegs.\n\nNach Ableisten seines Präsenzdienstes legte Gerald Geisler 2001 erfolgreich die Prüfung zum Erwerb einer Lizenz als Trainer für Galopprennpferde ab und nahm seine Tätigkeit als Trainer in der Wiener Freudenau auf. Einer zwischenzeitlichen Standortverlegung in die 2004 neu errichtete Anlage in Ebreichsdorf (Magna Racino) folgte mit Beginn der Saison 2005 der Wechsel an die Galopprennbahn Riem in München. Seit Februar 2010 hat er sein Trainingsquartier in Iffezheim. Von 2005 bis 2006 war er für den Fernsehsender Premiere Win, 2009 für Equi8 als Kommentator für nationale und internationale Pferderennen tätig.';
 var bigTextNumberTwo = '\n1956 wechselte Gorton zum Fernsehen und entwarf für das Programm ABC Weekend Television die Szenenbilder zu der Reihe Armchair Theatre. Seit Mitte der 1960er Jahre designte Assheton Gorton primär für den Kinofilm. Seit er von Richard Lester für das moderne Zeitbild Der gewisse Kniff die architektonische Gestaltung vornahm, hat Gorton ein quantitativ schmales Œuvre vorgelegt, das jedoch nahezu durchgehend ambitioniert und hochklassig ist. Seine frühen Arbeiten wie der Fotografen-Krimi Blow Up oder die Popkultur-Spielerei Magic Christian machten ihn zu einem wichtigen Vertreter des Swinging Sixties-Kinos seines Landes. In späteren Jahren konzentrierte sich Assheton Gorton mehr und mehr auf die Ausstattung prunkvoller Bilderbögen und Ausstattungsepen wie das Historiendrama Revolution mit Al Pacino und der Fantasyfilm Legend mit dem jungen Tom Cruise.';
@@ -10,6 +10,83 @@ var bigTextNumberFour = '\n\nThis section demonstrates how to sign code by creat
 
 var fontNormal = './test/fonts/arial.ttf';
 var fontBold = './test/fonts/arialbd.ttf';
+var simpleTemplate = {
+    name: 'Dummy Template for Test',
+    options: {
+        pages: [
+            {
+                layout: {
+                    size: 'A4',
+                    layout: 'portrait',
+                    margins: {
+                        top: 0,
+                        left: 0,
+                        bottom: 0,
+                        right: 0
+                    }
+                },
+                sections: {
+                    header: {
+                        font: {
+                            name: './test/fonts/arial.ttf',
+                            size: 12,
+                            color: '#000000'
+                        },
+                        format: {
+                            align: 'left',
+                            left: 70,
+                            top: 50,
+                            width: 481,
+                            height: 300
+                        }
+                    },
+                    content: {
+                        font: {
+                            name: './test/fonts/arial.ttf',
+                            size: 12,
+                            color: '#000000'
+                        },
+                        format: {
+                            align: 'left',
+                            left: 70,
+                            top: 350,
+                            width: 481,
+                            height: 320
+                        }
+                    }
+                }
+            },
+            {
+                layout: {
+                    size: 'A4',
+                    layout: 'portrait',
+                    margins: {
+                        top: 0,
+                        left: 0,
+                        bottom: 0,
+                        right: 0
+                    }
+                },
+                sections: {
+                    content: {
+                        font: {
+                            name: './test/fonts/arial.ttf',
+                            size: 12,
+                            color: '#000000'
+                        },
+                        format: {
+                            align: 'left',
+                            left: 70,
+                            top: 50,
+                            width: 481,
+                            height: 620
+                        }
+                    }
+                }
+            }
+        ]
+    }
+};
 
 describe('lx-pdf', function () {
     it('should be initialized correctly', function () {
@@ -26,15 +103,14 @@ describe('lx-pdf', function () {
         expect(typeof sut.showTextboxframe).toBe('function');
     });
 
-    it('should be loads a wrong template', function() {
+    it('should be loads a wrong template', function () {
         expect(sut.loadTemplate('nonexistfile.json')).toBeFalsy();
         expect(sut.loadTemplate('')).toBeFalsy();
     });
 
-    it('add some content and save to file', function() {
+    it('add some content and save to file', function () {
         expect(sut.addContent('list', ['Entry A', 'Entry B', '', 'Entry D'])).toBeTruthy();
         expect(sut.addContent('linebreak', 'This text is too width. And should be automatic break.')).toBeTruthy();
-        expect(sut.addContent('noneexits', 'This text will never display.')).toBeTruthy();
 
         expect(sut.addContent('date', '31.12.2013')).toBeTruthy();
         expect(sut.addContent('subject', 'Small Test')).toBeTruthy();
@@ -46,10 +122,10 @@ describe('lx-pdf', function () {
 
         // Table
         var tableHeader = [
-            {text: 'Column 1', width: 120, align: 'left', font: {name : fontBold, size : 12, color: '#000000'}},
-            {text: 'Column 2', width: 180, align: 'left', font: {name : fontBold, size : 12, color: '#000000'}},
-            {text: 'Column 3', width: 100, align: 'center', font: {name : fontBold, size : 12, color: '#000000'}},
-            {text: 'Column 4', width:  80, align: 'right', font: {name : fontBold, size : 12, color: '#000000'}}
+            {text: 'Column 1', width: 120, align: 'left', font: {name: fontBold, size: 12, color: '#000000'}},
+            {text: 'Column 2', align: 'left', font: {name: fontBold, size: 12, color: '#000000'}},
+            {text: 'Column 3', width: 100, align: 'center', font: {name: fontBold, size: 12, color: '#000000'}},
+            {text: 'Column 4', width: 80, align: 'right', font: {name: fontBold, size: 12, color: '#000000'}}
         ];
 
         var tableData = [
@@ -64,11 +140,22 @@ describe('lx-pdf', function () {
             ['Cell A6', {text: 'Cell B6', align: 'right', font: {color: '#FF00FF'}}, 'Cell C6', 'Cell D6'],
             ['Cell A7', 'Cell B7', 'Cell C7', 'Cell D7'],
             // Draw a row with cell lines. Option "linemode" says, use border for every next cell in this line
-            [{text: 'Cell A8', border: {color: '#000000', style: 'normal', position: ['bottom', 'top'], linemode: true, linewidth: 2}}, 'Cell B8', 'Cell C8'],
+            [
+                {text: 'Cell A8', border: {color: '#000000', style: 'normal', position: ['bottom', 'top'], linemode: true, linewidth: 2}},
+                'Cell B8',
+                'Cell C8',
+                'Cell D8'
+            ],
             // A Cell with different font, the € Symbol is ignored by PDF Kit for text width calculation.
-            [{text: 'Colspan over "2" Cells, thats cool', colspan: 2, align: 'center', font: {name : fontBold}, border: {color: '#000000', position: ['top', 'bottom', 'left', 'right']}}, '', {text: 'One Cell', align: 'right'}],
-            ['', {text: 'Colspan over "3" Cells, thats cool', colspan: 3, align: 'center', font: {name : fontBold}, border: {color: '#000000', position: ['top', 'bottom', 'left', 'right']}}],
-            [{text: 'Colspan over "4" Cells, thats cool', colspan: 4, align: 'center', font: {name : fontBold}, border: {color: '#000000', style: 'double', position: ['bottom']}}]
+            [
+                {text: 'Colspan over "2" Cells, thats cool', colspan: 2, align: 'center', font: {name: fontBold}, border: {color: '#000000', position: ['top', 'bottom', 'left', 'right']}},
+                '',
+                {text: 'One Cell', align: 'right'}
+            ],
+            ['', {text: 'Colspan over "3" Cells, thats cool', colspan: 3, align: 'center', font: {name: fontBold}, border: {color: '#000000', position: ['top', 'bottom', 'left', 'right']}}],
+            [
+                {text: 'Colspan over "4" Cells, thats cool', colspan: 4, align: 'center', font: {name: fontBold}, border: {color: '#000000', style: 'double', position: ['bottom']}}
+            ]
         ];
 
         // Enable Textboxes
@@ -84,7 +171,7 @@ describe('lx-pdf', function () {
 
         sut.addContent('area51', 'A Image above');
 
-        sut.save('Dummy.pdf', function(result) {
+        sut.save('Dummy.pdf', function (result) {
             expect(result).toBeNull();
         });
 
@@ -104,7 +191,7 @@ describe('lx-pdf', function () {
         function addSummary(data, offsetColspan, colspan) {
             var offset = { text: '', colspan: offsetColspan };
             data.tablebody.push(
-                [offset, { text: 'Gesamt netto:', align: 'left', font: {name : fontBold}, colspan: colspan }, { text: data.summary, align: 'right', font: {name : fontBold} }]);
+                [offset, { text: 'Gesamt netto:', align: 'left', font: {name: fontBold}, colspan: colspan }, { text: data.summary, align: 'right', font: {name: fontBold} }]);
         }
 
         var invoice = {
@@ -148,98 +235,21 @@ describe('lx-pdf', function () {
         sut.addContent('content', '\nUt wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.');
         sut.addContent('content', '\nNam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer');
 
-        sut.save('invoice.pdf', function(result) {
+        sut.save('invoice.pdf', function (result) {
             expect(result).toBeNull();
         });
 
         waits(1000);
     });
 
-    it('simple pdf', function() {
-        var simpleTemplate = {
-            name   : 'Dummy Template for Test',
-            options: {
-                pages: [
-                    {
-                        layout    : {
-                            size   : 'A4',
-                            layout : 'portrait',
-                            margins: {
-                                top   : 0,
-                                left  : 0,
-                                bottom: 0,
-                                right : 0
-                            }
-                        },
-                        sections: {
-                            header: {
-                                font  : {
-                                    name : './test/fonts/arial.ttf',
-                                    size : 12,
-                                    color: '#000000'
-                                },
-                                format: {
-                                    align : 'left',
-                                    left  : 70,
-                                    top   : 50,
-                                    width : 481,
-                                    height: 300
-                                }
-                            },
-                            content: {
-                                font  : {
-                                    name : './test/fonts/arial.ttf',
-                                    size : 12,
-                                    color: '#000000'
-                                },
-                                format: {
-                                    align : 'left',
-                                    left  : 70,
-                                    top   : 350,
-                                    width : 481,
-                                    height: 320
-                                }
-                            }
-                        }
-                    },
-                    {
-                        layout    : {
-                            size   : 'A4',
-                            layout : 'portrait',
-                            margins: {
-                                top   : 0,
-                                left  : 0,
-                                bottom: 0,
-                                right : 0
-                            }
-                        },
-                        sections: {
-                            content: {
-                                font  : {
-                                    name : './test/fonts/arial.ttf',
-                                    size : 12,
-                                    color: '#000000'
-                                },
-                                format: {
-                                    align : 'left',
-                                    left  : 70,
-                                    top   : 50,
-                                    width : 481,
-                                    height: 620
-                                }
-                            }
-                        }
-                    }
-                ]
-            }
-        };
-
+    it('simple pdf with errors', function () {
         sut.loadTemplate(simpleTemplate);
 
         sut.clear();
 
         expect(sut.addContent('header', 'Hello World!')).toBeTruthy();
         expect(sut.addContent('content', 'Hello World!')).toBeTruthy();
+        expect(sut.addContent('noneexits', 'This text will never display.')).toBeTruthy();
 
         sut.addPageBreak();
 
@@ -251,8 +261,34 @@ describe('lx-pdf', function () {
         expect(sut.addContent('header', 'Hello World!')).toBeTruthy();
         expect(sut.addContent('content', 'Hello World!')).toBeTruthy();
 
-        sut.print(function(result) {
+        sut.print(function (result, error) {
+            expect(result).toBeNull();
+            expect(error).toBeDefined();
+            expect(typeof error).toBe('object');
+            expect(error.length).toBe(2);
+        });
+    });
+
+    it('simple pdf without errors', function () {
+        sut.loadTemplate(simpleTemplate);
+
+        sut.clear();
+
+        expect(sut.addContent('header', 'Hello World!')).toBeTruthy();
+        expect(sut.addContent('content', 'Hello World!')).toBeTruthy();
+
+        sut.addPageBreak();
+
+        expect(sut.addContent('content', 'Hello World!')).toBeTruthy();
+
+        sut.resetDocumentIndices();
+
+        expect(sut.addContent('content', 'Hello World!')).toBeTruthy();
+
+        sut.print(function (result, error) {
+            expect(error).toBeNull();
             expect(result).toBeDefined();
+            expect(typeof result).toBe('string');
         });
     });
 

@@ -179,7 +179,7 @@ A section defined a area of the page. You can usage size, orientation, fontstyle
 
 ### Working with sections
 #### Tables
-Display table with three columns and a head row.
+Display table with four columns and a head row.
 
 ```js
 {// The table header
@@ -194,9 +194,8 @@ var tableHeader = [
             color: '#000000'
         }
     },
-    {
+    {	// No cellwidth defined for this column, there will be auto calculated later
     	text: 'Column 2',
-        width: 161,
         align: 'left',
         font: {
         	name: './fonts/arialbd.ttf',
@@ -214,23 +213,32 @@ var tableHeader = [
             color: '#000000'
         }
     }
+    {	// No cellwidth, there will be defined in the data section
+    	text: 'Column 4',
+        align: 'right',
+        font: {
+        	name: './fonts/arialbd.ttf',
+            size: 12,
+            color: '#000000'
+        }
+    }
 ];
 
 // The table content
 var tableData = [
     // Simple Row
-    ['Cell A1', 'Cell B1', 'Cell C1'],
+    ['Cell A1', 'Cell B1', 'Cell C1', 'Cell D1'],
 
-    // Simple Row with empty text
+    // Simple Row with empty text and missing cell D2
     ['Cell A2', '', 'Cell C2'],
 
-    // A Row with Styling in CELL B6
-    ['Cell A6', {text: 'Cell B6', align: 'right', font: {color: '#FF00FF'}}, 'Cell C6'],
+    // A Row with Styling in CELL B3
+    ['Cell A3', {text: 'Cell B3', align: 'right', font: {color: '#FF00FF'}}, 'Cell C3', 'Cell D3'],
 
     // Draw a row with border lines. Option "linemode" says, use border for every next cell in this line
     [
     	{
-        	text: 'Cell A8',
+        	text: 'Cell A4',
             border: {
             	color: '#000000',
                 style: 'normal',
@@ -238,15 +246,17 @@ var tableData = [
                 linemode: true
             }
         },
-        'Cell B8',
-        'Cell C8'
+        'Cell B4',
+        'Cell C4',
+        'Cell D4'
     ],
+
     // A Cell with different font and double line
     [
     	'',
         '',
         {
-        	text: 'Cell C9',
+        	text: 'Cell C5',
             align: 'right',
             font: {
             	name : './fonts/arialbd.ttf'},
@@ -257,6 +267,28 @@ var tableData = [
                 }
             }
         }
+    ],
+
+	// Define cellwidth in Cell D6, this is applied to the entire column.
+    [
+    	'Cell A6',
+        'Cell B6',
+        'Cell C6',
+        {
+        	text: 'Cell D6',
+            width: 120
+        }
+    ],
+
+    // Sample Colspan over two Cells B7-B8
+    [
+    	'Cell A7',
+        {
+        	text: 'Cell B7 and C7',
+            colspan: 2
+        },
+        'Cell D7'
+    ]
 ];
 
 // Add table to document
@@ -270,6 +302,7 @@ Per cell you can defined different formats, but you can also describe it per row
 ```js
 var cellFormat = {
 	text: 'My Text', // Text to display
+    colspan: 2,  // Link cells
     align: 'right', // Textalignment (default: left)
     font: {
     	name: './fonts/arialbd.ttf', // Fontname
@@ -313,16 +346,16 @@ Reset document, keep all data and start with page 1. Batch Job.
 sut.resetDocumentIndices();
 ```
 
-Saves the document as pdf file to storage. If (result) is undefined then success.
+Saves the document as pdf file to storage. If (error) is undefined then success.
 ```js
-save(filename, function(result) {
+save(filename, function(error) {
 	...
 });
 ```
 
-Returns document as string (data).
+Returns document as string (data). If (data) is null, (error) holds error informations.
 ```js
-print(function(data) {
+print(function(data, error) {
 	...
 })
 ```
@@ -331,6 +364,8 @@ print(function(data) {
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt](http://gruntjs.com/).
 
 ## Release History
+### v0.2.0 project initial
+
 ### v0.1.0 project initial
 
 ## Author
