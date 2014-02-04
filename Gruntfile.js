@@ -15,24 +15,7 @@ module.exports = function (grunt) {
         },
         jshint: {
             options: {
-                bitwise: true,
-                curly: true,
-                eqeqeq: true,
-                forin: true,
-                immed: true,
-                latedef: true,
-                newcap: true,
-                noarg: true,
-                noempty: true,
-                nonew: true,
-                regexp: true,
-                undef: true,
-                unused: true,
-                indent: 4,
-                quotmark: 'single',
-                node: true,
-                globals: {
-                }
+                jshintrc: true
             },
             test: '<%= jshintFiles %>',
             jslint: {
