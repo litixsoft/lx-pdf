@@ -132,10 +132,10 @@ describe('lx-pdf', function () {
             // Simple Row
             ['Cell A1', 'Cell B1', 'Cell C1', 'Cell D1'],
             // Simple Row with empty text
-            ['Cell A2', '', '', 'Cell D2'],
-            ['Cell A3', 'Cell B3', 'Cell C3', 'Cell D3'],
+            ['Cell A2', {}, '', 'Cell D2'],
+            ['Cell A3', null, 'Cell C3', 'Cell D3'],
             ['Cell A4', 'Cell B4', 'Cell C4', 'Cell D3'],
-            ['Cell A5', 'Cell B5', 'Cell C5', 'Cell D3'],
+            ['Cell A5', 'Cell B5', [], 'Cell D3'],
             // A Row with Styling in CELL B6
             ['Cell A6', {text: 'Cell B6', align: 'right', font: {color: '#FF00FF'}}, 'Cell C6', 'Cell D6'],
             ['Cell A7', 'Cell B7', 'Cell C7', 'Cell D7'],

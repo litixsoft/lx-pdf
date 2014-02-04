@@ -2,4 +2,4 @@
 build
 atlassian-ide-plugin.xml
 node_modules
-/*.pdf
+*.pdf
