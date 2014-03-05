@@ -1,7 +1,7 @@
 {
     "name": "lx-pdf",
     "description": "Litixsoft pdf library for creating pdf files in node.js.",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "homepage": "https://github.com/litixsoft/lx-pdf",
     "author": {
         "name": "Litixsoft GmbH",
@@ -64,7 +64,7 @@
         "grunt-jasmine-node": "~0.1.0",
         "grunt-open": "~0.2.3",
         "istanbul": "~0.2.4",
-        "load-grunt-tasks": "0.2.1"
+        "load-grunt-tasks": "~0.4.0"
     },
     "dependencies": {
         "lx-helpers": "~0.3.3",
