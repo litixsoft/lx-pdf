@@ -51,10 +51,16 @@
             "url": "https://github.com/litixsoft/lx-pdf/blob/master/LICENSE"
         }
     ],
-    "readmeFilename": "README.md",
     "main": "lib/lx-pdf.js",
     "scripts": {
         "test": "grunt test"
+    },
+    "engines": {
+        "node": ">=0.10"
+    },
+    "dependencies": {
+        "lx-helpers": "~0.3.3",
+        "pdfkit": "~0.2.7"
     },
     "devDependencies": {
         "grunt": "~0.4.2",
@@ -65,9 +71,5 @@
         "grunt-open": "~0.2.3",
         "istanbul": "~0.2.4",
         "load-grunt-tasks": "~0.4.0"
-    },
-    "dependencies": {
-        "lx-helpers": "~0.3.3",
-        "pdfkit": "~0.2.7"
     }
 }
