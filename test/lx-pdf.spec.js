@@ -269,7 +269,7 @@ describe('lx-pdf', function () {
         });
     });
 
-    it('simple pdf without errors', function () {
+    it('simple pdf without errors', function (done) {
         sut.loadTemplate(simpleTemplate);
 
         sut.clear();
@@ -286,9 +286,11 @@ describe('lx-pdf', function () {
         expect(sut.addContent('content', 'Hello World!')).toBeTruthy();
 
         sut.print(function (result, error) {
-            expect(error).toBeNull();
+            expect(error).toBeUndefined();
             expect(result).toBeDefined();
-            expect(typeof result).toBe('string');
+            expect(typeof result).toBe('object');
+
+            done();
         });
     });
 
