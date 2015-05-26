@@ -10,7 +10,7 @@
 Usage with template file.
 
 ```js
-var lxDocument = require('lx-pdf.js')('template.json');
+var lxDocument = require('lx-pdf')('template.json');
 
 // Add text to Document section 'content'
 var text = '<some text>';
@@ -336,6 +336,16 @@ Add text or table object to current page.
 sut.addContent(sectionname, sectiondata)
 ```
 
+Adds a picture
+```js
+sut.addImage(sectionname, imagefilename, [options])
+```
+
+###### Options
+
+* __width__: Width in pixels. If only the width specified, then the height calculated, to maintain the aspect ratio
+* __height__: Height in pixels. If only the height specified, then the width calculated, to maintain the aspect ratio
+
 Performs a manual pagebreak.
 ```js
 sut.addPageBreak();
@@ -361,10 +371,11 @@ print(function(data, error) {
 ```
 
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt](http://gruntjs.com/).
+In line of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt](http://gruntjs.com/).
 
 ## Release History
-### v0.2.0 project initial
+### v0.1.2 project initial
+- Bugfixes
 
 ### v0.1.0 project initial
 
@@ -372,7 +383,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 [Litixsoft GmbH](http://www.litixsoft.de)
 
 ## License
-Copyright (C) 2013 Litixsoft GmbH <info@litixsoft.de>
+Copyright (C) 2013-2015 Litixsoft GmbH <info@litixsoft.de>
 Licensed under the MIT license.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

@@ -141,20 +141,47 @@ describe('lx-pdf', function () {
             ['Cell A7', 'Cell B7', 'Cell C7', 'Cell D7'],
             // Draw a row with cell lines. Option "linemode" says, use border for every next cell in this line
             [
-                {text: 'Cell A8', border: {color: '#000000', style: 'normal', position: ['bottom', 'top'], linemode: true, linewidth: 2}},
+                {
+                    text: 'Cell A8',
+                    border: {
+                        color: '#000000',
+                        style: 'normal',
+                        position: ['bottom', 'top'],
+                        linemode: true,
+                        linewidth: 2
+                    }
+                },
                 'Cell B8',
                 'Cell C8',
                 'Cell D8'
             ],
             // A Cell with different font, the € Symbol is ignored by PDF Kit for text width calculation.
             [
-                {text: 'Colspan over "2" Cells, thats cool', colspan: 2, align: 'center', font: {name: fontBold}, border: {color: '#000000', position: ['top', 'bottom', 'left', 'right']}},
+                {
+                    text: 'Colspan over "2" Cells, thats cool',
+                    colspan: 2,
+                    align: 'center',
+                    font: {name: fontBold},
+                    border: {color: '#000000', position: ['top', 'bottom', 'left', 'right']}
+                },
                 '',
                 {text: 'One Cell', align: 'right'}
             ],
-            ['', {text: 'Colspan over "3" Cells, thats cool', colspan: 3, align: 'center', font: {name: fontBold}, border: {color: '#000000', position: ['top', 'bottom', 'left', 'right']}}],
+            ['', {
+                text: 'Colspan over "3" Cells, thats cool',
+                colspan: 3,
+                align: 'center',
+                font: {name: fontBold},
+                border: {color: '#000000', position: ['top', 'bottom', 'left', 'right']}
+            }],
             [
-                {text: 'Colspan over "4" Cells, thats cool', colspan: 4, align: 'center', font: {name: fontBold}, border: {color: '#000000', style: 'double', position: ['bottom']}}
+                {
+                    text: 'Colspan over "4" Cells, thats cool',
+                    colspan: 4,
+                    align: 'center',
+                    font: {name: fontBold},
+                    border: {color: '#000000', style: 'double', position: ['bottom']}
+                }
             ]
         ];
 
@@ -166,9 +193,15 @@ describe('lx-pdf', function () {
 
         // Add Table without Header
         sut.addTable('area51', ['Col A', 'Col B', 'Col C', 'Col D']);
+        sut.addContent('area51', '\n\nA Image below');
+        sut.addImage('area51', './test/images/litixlogo.png');
+        sut.addContent('area51', 'A Image above');
 
-        sut.addImage('area51', './test/images/litixlogo.png', {});
-
+        sut.addPageBreak();
+        sut.addImage('area51', './test/images/testbox.png');
+        sut.addContent('area51', 'A Image above');
+        sut.addContent('area51', '\nA Image above and below');
+        sut.addImage('area51', './test/images/litixlogo.png', {width: 200});
         sut.addContent('area51', 'A Image above');
 
         sut.save('test/Dummy.pdf', function (result) {
@@ -189,9 +222,14 @@ describe('lx-pdf', function () {
         }
 
         function addSummary(data, offsetColspan, colspan) {
-            var offset = { text: '', colspan: offsetColspan };
+            var offset = {text: '', colspan: offsetColspan};
             data.tablebody.push(
-                [offset, { text: 'Gesamt netto:', align: 'left', font: {name: fontBold}, colspan: colspan }, { text: data.summary, align: 'right', font: {name: fontBold} }]);
+                [offset, {
+                    text: 'Gesamt netto:',
+                    align: 'left',
+                    font: {name: fontBold},
+                    colspan: colspan
+                }, {text: data.summary, align: 'right', font: {name: fontBold}}]);
         }
 
         var invoice = {
