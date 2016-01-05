@@ -374,6 +374,9 @@ print(function(data, error) {
 In line of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt](http://gruntjs.com/).
 
 ## Release History
+### v0.1.3 project initial
+- Bugfixes
+
 ### v0.1.2 project initial
 - Bugfixes
 
@@ -383,7 +386,7 @@ In line of a formal styleguide, take care to maintain the existing coding style.
 [Litixsoft GmbH](http://www.litixsoft.de)
 
 ## License
-Copyright (C) 2013-2015 Litixsoft GmbH <info@litixsoft.de>
+Copyright (C) 2013-2016 Litixsoft GmbH <info@litixsoft.de>
 Licensed under the MIT license.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
