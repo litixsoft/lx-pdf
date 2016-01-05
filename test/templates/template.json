@@ -204,6 +204,20 @@
                     }
                 },
                 "sections": {
+                    "area50": {
+                        "font": {
+                            "name": "./test/fonts/arial.ttf",
+                            "size": 12,
+                            "color": "#000000"
+                        },
+                        "format": {
+                            "align": "center",
+                            "left": 70,
+                            "top": 20,
+                            "width": 481,
+                            "height": 100
+                        }
+                    },
                     "area51": {
                         "font": {
                             "name": "./test/fonts/arial.ttf",
