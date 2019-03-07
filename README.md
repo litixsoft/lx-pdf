@@ -1,3 +1,6 @@
+    Project is deprecated. No continue development, no bugfixing anymore.
+---
+
 # lx-pdf [![Build Status](https://travis-ci.org/litixsoft/lx-pdf.png?branch=master)](https://travis-ci.org/litixsoft/lx-pdf) [![david-dm](https://david-dm.org/litixsoft/lx-pdf.png)](https://david-dm.org/litixsoft/lx-pdf/) [![david-dm](https://david-dm.org/litixsoft/lx-pdf/dev-status.png)](https://david-dm.org/litixsoft/lx-pdf#info=devDependencies&view=table)
 
 >Easy to use template-based pdf document generator in node.js.
