@@ -98,6 +98,35 @@ Supported image formats: .PNG and .JPEG.
     }
 }
 ```
+#### Image or Multiple Images
+You can use a image or multiple images by specifying the position of the image in template. Perfect for letter templates.
+Supported image formats: .PNG and .JPEG.
+
+```js
+{
+    "multipleImage": [{
+        "filename": "./image/Image1.png",
+        "imageformat": {
+	        "fit": [50, 50]
+    	},
+    	"position": {
+    	    "left": "50",
+    	    "top": "50"
+    	}
+    },
+    {
+      "filename": "./image/Image2.png",
+              "imageformat": {
+      	        "fit": [50, 50]
+          	},
+          	"position": {
+          	    "left": "110",
+          	    "top": "50"
+          	}
+    }
+    ]
+}
+```
 
 #### Font and Format
 
